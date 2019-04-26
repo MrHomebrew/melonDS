@@ -20,6 +20,7 @@
 #include <string>
 #include <malloc.h>
 #include <switch.h>
+#include <EGL/egl.h>
 
 // Deal with conflicting typedefs
 #define u64 u64_
@@ -105,6 +106,11 @@ void Semaphore_Wait(void* sema)
 void Semaphore_Post(void* sema)
 {
     semaphoreSignal((Semaphore*)sema);
+}
+
+void* GL_GetProcAddress(const char* proc)
+{
+    return (void*)eglGetProcAddress(proc);
 }
 
 bool MP_Init()

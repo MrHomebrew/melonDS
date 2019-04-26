@@ -16,8 +16,12 @@
     with melonDS. If not, see http://www.gnu.org/licenses/.
 */
 
+#ifdef __SWITCH__
+#include <glad/glad.h>
+#else
 #include <GL/gl.h>
 #include <GL/glext.h>
+#endif
 
 #include <stdio.h>
 #include <string.h>
@@ -548,6 +552,9 @@ void VCount144()
 
 void RenderFrame()
 {
+    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferID);
+    glViewport(0, 0, 256, 192);
+
     // TODO: proper clear color!!
     glClearColor(0, 0, 0, 31.0/255.0);
     glClearDepth(1.0);
@@ -587,7 +594,6 @@ void RenderFrame()
     }
 
 
-    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferID);
     glReadBuffer(GL_COLOR_ATTACHMENT0);
     //glReadPixels(0, 0, 256, 48, GL_RGBA, GL_UNSIGNED_BYTE, Framebuffer);
     glBindBuffer(GL_PIXEL_PACK_BUFFER, PixelbufferID);

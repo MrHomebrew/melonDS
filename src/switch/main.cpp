@@ -438,7 +438,7 @@ void startCore(bool reset)
     }
 
     threadCreate(&core, runCore, NULL, 0x8000, 0x30, 1);
-    threadStart(&core);
+    //threadStart(&core);
 
     if (Config::AudioVolume > 0)
     {
@@ -469,7 +469,7 @@ void startCore(bool reset)
 
 void pauseCore()
 {
-    threadWaitForExit(&core);
+    //threadWaitForExit(&core);
     threadWaitForExit(&audio);
     threadWaitForExit(&mic);
     if (R_FAILED(pcvSetClockRate(PcvModule_Cpu, clockSpeeds[0])))
@@ -795,6 +795,9 @@ int main(int argc, char **argv)
             NDS::ReleaseKey(16 + 6);
             NDS::ReleaseScreen();
         }
+
+        NDS::RunFrame();
+        memcpy(displayBuffer, GPU::Framebuffer, sizeof(GPU::Framebuffer));
 
         clearDisplay(0);
         drawImage(displayBuffer, 256, 192, true, topX, topY, topWidth, topHeight, Config::ScreenRotation);
